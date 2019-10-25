@@ -1,0 +1,19 @@
+<button
+  mat-stroked-button
+  color='primary'
+  class='cars-details__button'
+>Add car</button>
+
+<mat-accordion *ngFor='let category of carsService.category'>
+  <mat-expansion-panel class='cars-details__category'>
+
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{category.name}} ({{getCategoryAmount(category)}})
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <app-car-card [category]='category'></app-car-card>
+
+  </mat-expansion-panel>
+</mat-accordion>

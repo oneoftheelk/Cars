@@ -1,0 +1,17 @@
+.card-container {
+  margin-bottom: 10px;
+}
+
+.card-header {
+  position: relative;
+}
+
+.card-header__buttons {
+  position: absolute;
+  right: 10px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+}

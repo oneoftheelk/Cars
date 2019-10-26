@@ -9,6 +9,7 @@ import { CarCardComponent } from './components/car-card/car-card.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { CategoryFilterPipe } from './pipes/category-filter.pipe'
 import { CarAddComponent } from './components/car-add/car-add.component'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CarAddComponent } from './components/car-add/car-add.component'
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

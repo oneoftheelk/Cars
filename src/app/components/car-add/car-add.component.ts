@@ -28,7 +28,7 @@ export class CarAddComponent implements OnInit {
 
   submit() {
     const car: Car = {
-      id: +Math.random().toFixed(2),
+      id: Math.random().toFixed(2),
       category: this.form.value.category,
       name: this.form.value.name,
       description: this.form.value.description,

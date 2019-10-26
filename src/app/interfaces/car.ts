@@ -1,5 +1,5 @@
 export interface Category {
-  id: number,
+  id?: number,
   name: string
 }
 
@@ -14,7 +14,7 @@ export interface Impact {
 }
 
 export interface Car {
-  id: number
+  id: string
   category: string
   name: string
   description: string

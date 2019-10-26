@@ -26,7 +26,7 @@ export class CarCardComponent implements OnInit {
     this.readonly = false
   }
 
-  removeCar(id: number) {
+  removeCar(id: string) {
     this.carsService.removeCar(id)
   }
 }

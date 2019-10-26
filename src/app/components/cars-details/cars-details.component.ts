@@ -16,6 +16,7 @@ export class CarsDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.carsService.getCars()
   }
 
   getCategoryAmount(category) {

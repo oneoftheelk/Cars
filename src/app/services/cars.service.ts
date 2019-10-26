@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Car, Category, Impact, Probability } from '../interfaces/car'
+import { HttpClient } from '@angular/common/http'
+import { Subscription } from 'rxjs'
+import { environment } from '../../environments/environment'
+import { catchError, map, tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
 export class CarsService {
+  constructor(private http: HttpClient) {}
 
-  category: Category[] = [
-    { id: 1, name: 'Van' },
-    { id: 2, name: 'Truck' }
-  ]
+  category: Category[] = [ ]
 
   PROBABILITY: Probability[] = [
     { id: 1, name: 'Low (<=10%)' },
@@ -25,35 +27,57 @@ export class CarsService {
     { id: 4, name: 'Rather high (>=5%)' },
   ]
 
-  cars: Car[] = [
-    { id: 1, category: this.category[0].name, name: 'car 1',
-      description: 'description 1', probability: this.PROBABILITY[1].name, impact: this.IMPACT[0].name },
-    { id: 2, category: this.category[1].name, name: 'car 2',
-      description: 'description 2', probability: this.PROBABILITY[2].name, impact: this.IMPACT[1].name },
-    { id: 3, category: this.category[0].name, name: 'car 3',
-      description: 'description 3', probability: this.PROBABILITY[3].name, impact: this.IMPACT[3].name },
-    { id: 4, category: this.category[1].name, name: 'car 4',
-      description: 'description 4', probability: this.PROBABILITY[0].name, impact: this.IMPACT[2].name }
-  ]
+  cars: Car[] = []
 
   getCategoryAmount(category: Category): number {
-    const reducer = (acc, car) => car.category === category.name ? acc + 1 : acc
+    const reducer = (acc, car) => car.category === category ? acc + 1 : acc
     return this.cars.reduce(reducer, 0)
   }
 
-  addCar(car: Car) {
-    this.cars = [...this.cars, car]
-
-    if (!this.category.find((cat => cat.name.includes(car.category)))) {
-      const newCategory: Category = {
-        id: +Math.random().toFixed(2),
-        name: car.category
-      }
-      this.category = [...this.category, newCategory]
-    }
+  getCars(): Subscription {
+    return this.http.get(`${environment.databaseUrl}/cars.json`)
+      .pipe(
+        map((response: {[key: string]: any}) => {
+          return Object
+            .keys(response)
+            .map(key => ({
+              ...response[key],
+              id: key
+            }))
+        }),
+        tap(response => {
+          const newCategories = []
+          for (const res of response) {
+            if (!newCategories.includes(res.category)) {
+              newCategories.push(res.category)
+            }
+          }
+          this.category = newCategories
+        })
+      )
+      .subscribe(response => {
+        this.cars = response
+      })
   }
 
-  removeCar(id: number) {
-    this.cars = this.cars.filter(car => car.id !== id)
+  addCar(car: Car): Subscription {
+    return this.http.post(`${environment.databaseUrl}/cars.json`, car)
+      .pipe(
+        map(response => {
+          return {
+            ...car,
+            id: response.name
+          }
+        })
+      )
+      .subscribe(() => this.getCars())
+  }
+
+  removeCar(id: string): Subscription {
+    return this.http.delete(`${environment.databaseUrl}/cars/${id}.json`)
+      .subscribe(() => {
+        this.cars.filter(car => car.id !== id)
+        this.getCars()
+      })
   }
 }

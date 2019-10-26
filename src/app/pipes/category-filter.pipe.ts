@@ -6,8 +6,8 @@ import { Car, Category } from '../interfaces/car'
 })
 export class CategoryFilterPipe implements PipeTransform {
 
-  transform(cars: Car[], category: Category): Car[] {
-    return cars.filter(car => car.category === category.name);
+  transform(cars: Car[], category: string): Car[] {
+    return cars.filter(car => car.category === category);
   }
 
 }

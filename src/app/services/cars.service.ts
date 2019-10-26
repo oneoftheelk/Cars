@@ -61,7 +61,7 @@ export class CarsService {
   }
 
   addCar(car: Car): Observable<Car> {
-    return this.http.post(`${environment.databaseUrl}/cars.json`, car)
+    return this.http.post<Car>(`${environment.databaseUrl}/cars.json`, car)
       .pipe(
         map(response => {
           return {
@@ -85,6 +85,7 @@ export class CarsService {
     return this.http.patch<Car>(`${environment.databaseUrl}/cars/${car.id}.json`, car)
       .pipe(
         tap(response => {
+          // tslint:disable-next-line:no-shadowed-variable
           this.cars = this.cars.map(car => response.id === car.id ? response : car)
         })
       )

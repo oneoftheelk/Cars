@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core'
 import { CarsService } from '../../services/cars.service'
 import { Car } from '../../interfaces/car'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+import { SnackbarService } from '../../services/snackbar.service'
 
 @Component({
   selector: 'app-car-card',
@@ -16,8 +17,12 @@ export class CarCardComponent implements OnInit {
   selectedProbability: string
   selectedImpact: string
   readonly = true
+  areButtonsDisabled = false
 
-  constructor(private carsService: CarsService) { }
+  constructor(
+    private carsService: CarsService,
+    private snackbarService: SnackbarService
+  ) { }
 
   ngOnInit() {
     this.selectedProbability = this.car.probability
@@ -36,26 +41,34 @@ export class CarCardComponent implements OnInit {
   }
 
   removeCar(id: string) {
+    this.areButtonsDisabled = true
+
     this.carsService.removeCar(id)
       .subscribe(() => this.carsService.getCars()
-        .subscribe()
+        .subscribe(() => {
+          this.areButtonsDisabled = false
+          this.snackbarService.openSnackBar('Car has been removed')
+        })
       )
   }
 
   updateCar() {
+    if (this.form.status === 'INVALID') {
+      return null
+    }
+
+    this.areButtonsDisabled = true
+
     const updatedCar: Car = {
       ...this.form.value,
       category: this.car.category,
       id: this.car.id
     }
-    this.carsService.updateCar(updatedCar)
-      .subscribe()
-    // const updatedCar = {
-    //   ...this.car,
-    //   [event.currentTarget.id]: event.currentTarget.value
-    // }
 
-    // this.carsService.updateCar(updatedCar)
-    //   .subscribe()
+    this.carsService.updateCar(updatedCar)
+      .subscribe(() => {
+        this.areButtonsDisabled = false
+        this.snackbarService.openSnackBar('Car has been updated')
+      })
   }
 }

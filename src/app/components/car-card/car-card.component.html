@@ -8,6 +8,7 @@
         *ngIf='readonly; else apply'
         mat-stroked-button
         color='secondary'
+        [disabled]='areButtonsDisabled'
         (click)='editCar()'
       >Edit</button>
 
@@ -16,6 +17,7 @@
           mat-stroked-button
           color='primary'
           type='submit'
+          [disabled]='areButtonsDisabled || form.status === "INVALID"'
           (click)='updateCar()'
         >Apply</button>
       </ng-template>
@@ -23,6 +25,7 @@
       <button
         mat-stroked-button
         color='warn'
+        [disabled]='areButtonsDisabled'
         (click)='removeCar(car.id)'
       >Remove</button>
     </div>

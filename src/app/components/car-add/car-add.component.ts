@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core'
 import { CarsService } from '../../services/cars.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { Car } from '../../interfaces/car'
 import { MatDialogRef } from '@angular/material'
+import { SnackbarService } from '../../services/snackbar.service'
 
 @Component({
   selector: 'app-car-add',
@@ -18,7 +18,8 @@ export class CarAddComponent implements OnInit {
 
   constructor(
     private carsService: CarsService,
-    public dialogRef: MatDialogRef<CarAddComponent>
+    public dialogRef: MatDialogRef<CarAddComponent>,
+    private snackbarService: SnackbarService
   ) { }
 
   ngOnInit() {
@@ -38,28 +39,19 @@ export class CarAddComponent implements OnInit {
 
     this.areButtonsDisabled = true
 
-    // const car: Car = {
-    //   ...this.form.value,
-
-      // id: Math.random().toFixed(2),
-      // category: this.form.value.category,
-      // name: this.form.value.name,
-      // description: this.form.value.description,
-      // probability: this.selectedProbability,
-      // impact: this.selectedImpact
-    // }
-
     this.carsService.addCar({...this.form.value})
       .subscribe(() => {
         this.carsService.getCars()
           .subscribe(() => {
-            this.close()
+            this.dialogRef.close()
             this.areButtonsDisabled = false
+            this.snackbarService.openSnackBar('Car has been added')
           })
       })
   }
 
   close() {
     this.dialogRef.close()
+    this.snackbarService.openSnackBar('No changes applied')
   }
 }

@@ -33,7 +33,7 @@ export class CarsService {
     { id: 3, category: this.category[0], name: 'car 3',
       description: 'description 3', probability: this.PROBABILITY[3], impact: this.IMPACT[3] },
     { id: 4, category: this.category[1], name: 'car 4',
-      description: 'description 4', probability: this.PROBABILITY[4], impact: this.IMPACT[2] }
+      description: 'description 4', probability: this.PROBABILITY[0], impact: this.IMPACT[2] }
   ]
 
   getCategoryAmount(category: Category): number {
@@ -41,8 +41,8 @@ export class CarsService {
     return this.cars.reduce(reducer, 0)
   }
 
-  addCar(car: Car) {
-    this.cars.push(car)
+  addCar() {
+    console.log('car was added')
   }
 
   removeCar(id: number) {

@@ -1,52 +1,52 @@
-<mat-card *ngFor='let car of carsService.cars | category:category' class='card-container'>
-  <mat-card-header class='card-header'>
+<mat-card-header class='card-header'>
 
-    <mat-card-title>{{car.name}}</mat-card-title>
+  <mat-card-title>{{car.name}}</mat-card-title>
 
-    <div class='card-header__buttons'>
-      <button
-        mat-stroked-button
-        color='secondary'
-        (click)='editCar()'
-      >Edit</button>
-      <button
-        mat-stroked-button
-        color='warn'
-        (click)='removeCar(car.id)'
-      >Remove</button>
-    </div>
-  </mat-card-header>
+  <div class='card-header__buttons'>
+    <button
+      mat-stroked-button
+      color='secondary'
+      (click)='editCar()'
+    >Edit</button>
+    <button
+      mat-stroked-button
+      color='warn'
+      (click)='removeCar(car.id)'
+    >Remove</button>
+  </div>
+</mat-card-header>
 
-  <mat-card-content>
-    <div class="card-content">
-      <mat-form-field>
-        <input
-          matInput
-          placeholder="Car name"
-          [value]='car.name'
-          class='card-content__name'
-          [disabled]='disabled'
-        >
-      </mat-form-field>
+<mat-card-content>
+  <div class="card-content">
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Car name"
+        [value]='car.name'
+        class='card-content__name'
+        [readonly]='readonly'
+      >
+    </mat-form-field>
 
-      <mat-form-field>
-        <textarea
-          matInput
-          placeholder="Car description"
-          [value]='car.description'
-          [disabled]='disabled'
-        ></textarea>
-      </mat-form-field>
+    <mat-form-field>
+      <textarea
+        matInput
+        placeholder="Car description"
+        [value]='car.description'
+        [readonly]='readonly'
+      ></textarea>
+    </mat-form-field>
 
+    <div>
       <mat-form-field>
         <mat-select
           placeholder="Car probability"
-          [value]="selectedOption"
-          [disabled]='disabled'
+          [value]="selectedProbability"
+          [disabled]='readonly'
         >
           <mat-option
-            [value]="selectedOption"
             *ngFor='let p of carsService.PROBABILITY'
+            [value]="p.name"
           >{{p.name}}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -54,15 +54,15 @@
       <mat-form-field>
         <mat-select
           placeholder="Car impact"
-          [value]="selectedOption"
-          [disabled]='disabled'
+          [value]="selectedImpact"
+          [disabled]='readonly'
         >
           <mat-option
-            [value]="selectedOption"
             *ngFor='let i of carsService.IMPACT'
+            [value]="i.name"
           >{{i.name}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
-  </mat-card-content>
-</mat-card>
+  </div>
+</mat-card-content>

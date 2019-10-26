@@ -2,6 +2,7 @@
   mat-stroked-button
   color='primary'
   class='cars-details__button'
+  (click)='addCar()'
 >Add car</button>
 
 <mat-accordion *ngFor='let category of carsService.category'>
@@ -9,11 +10,13 @@
 
     <mat-expansion-panel-header>
       <mat-panel-title>
-        {{category.name}} ({{getCategoryAmount(category)}})
+        {{category.name}} ({{ getCategoryAmount(category) }})
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <app-car-card [category]='category'></app-car-card>
+    <mat-card *ngFor='let car of carsService.cars | category:category' class='card-container'>
+      <app-car-card [car]='car'></app-car-card>
+    </mat-card>
 
   </mat-expansion-panel>
 </mat-accordion>

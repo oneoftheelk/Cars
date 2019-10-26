@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core'
 import { CarsService } from '../../services/cars.service'
-import { Category } from '../../interfaces/car'
+import { Car } from '../../interfaces/car'
 
 @Component({
   selector: 'app-car-card',
@@ -9,18 +9,21 @@ import { Category } from '../../interfaces/car'
 })
 export class CarCardComponent implements OnInit {
 
-  selectedOption = '' // Не выбираются начальные значения
-  disabled = true
+  @Input() car: Car
 
-  @Input() category: Category
+  selectedProbability = ''
+  selectedImpact = ''
+  readonly = true
 
   constructor(private carsService: CarsService) { }
 
   ngOnInit() {
+    this.selectedProbability = this.car.probability.name
+    this.selectedImpact = this.car.impact.name
   }
 
   editCar() {
-    this.disabled = false
+    this.readonly = false
   }
 
   removeCar(id: number) {

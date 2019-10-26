@@ -6,7 +6,7 @@ import { CarsService } from '../../services/cars.service'
   templateUrl: './cars-details.component.html',
   styleUrls: ['./cars-details.component.scss']
 })
-export class CarDetailsComponent implements OnInit {
+export class CarsDetailsComponent implements OnInit {
 
   constructor(private carsService: CarsService) { }
 
@@ -15,5 +15,9 @@ export class CarDetailsComponent implements OnInit {
 
   getCategoryAmount(category) {
     return this.carsService.getCategoryAmount(category)
+  }
+
+  addCar() {
+    this.carsService.addCar()
   }
 }

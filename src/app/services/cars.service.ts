@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import { Car, Category, Impact, Probability } from '../interfaces/car'
 import { HttpClient } from '@angular/common/http'
-import { Subscription } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { environment } from '../../environments/environment'
-import { catchError, map, tap } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class CarsService {
     return this.cars.reduce(reducer, 0)
   }
 
-  getCars(): Subscription {
+  getCars(): Observable<Car[]> {
     return this.http.get(`${environment.databaseUrl}/cars.json`)
       .pipe(
         map((response: {[key: string]: any}) => {
@@ -46,6 +46,9 @@ export class CarsService {
             }))
         }),
         tap(response => {
+          this.cars = response
+        }),
+        tap(response => {
           const newCategories = []
           for (const res of response) {
             if (!newCategories.includes(res.category)) {
@@ -55,12 +58,9 @@ export class CarsService {
           this.category = newCategories
         })
       )
-      .subscribe(response => {
-        this.cars = response
-      })
   }
 
-  addCar(car: Car): Subscription {
+  addCar(car: Car): Observable<Car> {
     return this.http.post(`${environment.databaseUrl}/cars.json`, car)
       .pipe(
         map(response => {
@@ -70,14 +70,23 @@ export class CarsService {
           }
         })
       )
-      .subscribe(() => this.getCars())
   }
 
-  removeCar(id: string): Subscription {
+  removeCar(id: string): Observable<any> {
     return this.http.delete(`${environment.databaseUrl}/cars/${id}.json`)
-      .subscribe(() => {
-        this.cars.filter(car => car.id !== id)
-        this.getCars()
-      })
+      .pipe(
+        tap(() => {
+          this.cars.filter(car => car.id !== id)
+        })
+      )
+  }
+
+  updateCar(car: Car): Observable<Car> {
+    return this.http.patch<Car>(`${environment.databaseUrl}/cars/${car.id}.json`, car)
+      .pipe(
+        tap(response => {
+          this.cars = this.cars.map(car => response.id === car.id ? response : car)
+        })
+      )
   }
 }

@@ -14,7 +14,7 @@ export interface Impact {
 }
 
 export interface Car {
-  id: string
+  id?: string
   category: string
   name: string
   description: string

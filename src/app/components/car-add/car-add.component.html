@@ -21,11 +21,7 @@
 
     <div>
       <mat-form-field>
-        <mat-select
-          placeholder="Car probability"
-          formControlName='probability'
-          [(value)]='selectedProbability'
-        >
+        <mat-select placeholder="Car probability" formControlName='probability' [(ngModel)]='selectedProbability'>
           <mat-option *ngFor='let p of carsService.PROBABILITY' [value]='p.name'>
             {{p.name}}
           </mat-option>
@@ -33,11 +29,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select
-          placeholder="Car impact"
-          formControlName='impact'
-          [(value)]='selectedImpact'
-        >
+        <mat-select placeholder="Car impact" formControlName='impact' [(ngModel)]='selectedImpact'>
           <mat-option *ngFor='let i of carsService.IMPACT' [value]='i.name'>
             {{i.name}}
           </mat-option>
@@ -50,11 +42,14 @@
         mat-stroked-button
         color='secondary'
         type='submit'
+        [disabled]='areButtonsDisabled || form.status === "INVALID"'
         (click)='submit()'
       >Save</button>
       <button
         mat-stroked-button
         color='warn'
+        [disabled]='areButtonsDisabled'
+        (click)='close()'
       >Cancel</button>
     </div>
   </form>

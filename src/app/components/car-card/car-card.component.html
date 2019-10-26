@@ -1,68 +1,84 @@
-<mat-card-header class='card-header'>
+<form [formGroup]='form'>
+  <mat-card-header class='card-header'>
 
-  <mat-card-title>{{car.name}}</mat-card-title>
+    <mat-card-title>{{car.name}}</mat-card-title>
 
-  <div class='card-header__buttons'>
-    <button
-      mat-stroked-button
-      color='secondary'
-      (click)='editCar()'
-    >Edit</button>
-    <button
-      mat-stroked-button
-      color='warn'
-      (click)='removeCar(car.id)'
-    >Remove</button>
-  </div>
-</mat-card-header>
+    <div class='card-header__buttons'>
+      <button
+        *ngIf='readonly; else apply'
+        mat-stroked-button
+        color='secondary'
+        (click)='editCar()'
+      >Edit</button>
 
-<mat-card-content>
-  <div class="card-content">
-    <mat-form-field>
-      <input
-        matInput
-        placeholder="Car name"
-        [value]='car.name'
-        class='card-content__name'
-        [readonly]='readonly'
-      >
-    </mat-form-field>
+      <ng-template #apply>
+        <button
+          mat-stroked-button
+          color='primary'
+          type='submit'
+          (click)='updateCar()'
+        >Apply</button>
+      </ng-template>
 
-    <mat-form-field>
-      <textarea
-        matInput
-        placeholder="Car description"
-        [value]='car.description'
-        [readonly]='readonly'
-      ></textarea>
-    </mat-form-field>
-
-    <div>
-      <mat-form-field>
-        <mat-select
-          placeholder="Car probability"
-          [value]="selectedProbability"
-          [disabled]='readonly'
-        >
-          <mat-option
-            *ngFor='let p of carsService.PROBABILITY'
-            [value]="p.name"
-          >{{p.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field>
-        <mat-select
-          placeholder="Car impact"
-          [value]="selectedImpact"
-          [disabled]='readonly'
-        >
-          <mat-option
-            *ngFor='let i of carsService.IMPACT'
-            [value]="i.name"
-          >{{i.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+      <button
+        mat-stroked-button
+        color='warn'
+        (click)='removeCar(car.id)'
+      >Remove</button>
     </div>
-  </div>
-</mat-card-content>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="card-content">
+      <mat-form-field>
+        <input
+          matInput
+          id='name'
+          formControlName='name'
+          placeholder="Car name"
+          class='card-content__name'
+          [(ngModel)]='car.name'
+          [readonly]='readonly'
+        >
+      </mat-form-field>
+
+      <mat-form-field>
+        <textarea
+          matInput
+          formControlName='description'
+          placeholder="Car description"
+          [(ngModel)]='car.description'
+          [readonly]='readonly'
+        ></textarea>
+      </mat-form-field>
+
+      <div>
+        <mat-form-field [class.card-content_readonly]='readonly'>
+          <mat-select
+            formControlName='probability'
+            placeholder="Car probability"
+            [(ngModel)]="selectedProbability"
+          >
+            <mat-option
+              *ngFor='let p of carsService.PROBABILITY'
+              [value]='p.name'
+            >{{p.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field [class.card-content_readonly]='readonly'>
+          <mat-select
+            formControlName='impact'
+            placeholder="Car impact"
+            [(ngModel)]="selectedImpact"
+          >
+            <mat-option
+              *ngFor='let i of carsService.IMPACT'
+              [value]="i.name"
+            >{{i.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+</form>

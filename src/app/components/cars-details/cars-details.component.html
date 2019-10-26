@@ -5,9 +5,9 @@
   (click)='openDialog()'
 >Add car</button>
 
-<mat-accordion *ngFor='let category of carsService.category'>
+<mat-accordion>
   <mat-expansion-panel
-    *ngIf='getCategoryAmount(category) !== 0'
+    *ngFor='let category of carsService.category'
     class='cars-details__category'
   >
 
@@ -17,7 +17,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-card *ngFor='let car of carsService.cars | categoryFilter:category' class='card-container'>
+    <mat-card *ngFor='let car of carsService.cars | categoryFilter:category.toString()' class='card-container'>
       <app-car-card [car]='car'></app-car-card>
     </mat-card>
 

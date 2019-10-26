@@ -7,14 +7,16 @@ import { CarsDetailsComponent } from './components/cars-details/cars-details.com
 import { MaterialModule } from './material.module'
 import { CarCardComponent } from './components/car-card/car-card.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { CategoryPipe } from './pipes/category.pipe'
+import { CategoryFilterPipe } from './pipes/category-filter.pipe'
+import { CarAddComponent } from './components/car-add/car-add.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     CarsDetailsComponent,
     CarCardComponent,
-    CategoryPipe
+    CarAddComponent,
+    CategoryFilterPipe
   ],
   imports: [
     BrowserModule,
@@ -24,6 +26,7 @@ import { CategoryPipe } from './pipes/category.pipe'
     MaterialModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CarAddComponent]
 })
 export class AppModule { }

@@ -2,11 +2,14 @@
   mat-stroked-button
   color='primary'
   class='cars-details__button'
-  (click)='addCar()'
+  (click)='openDialog()'
 >Add car</button>
 
 <mat-accordion *ngFor='let category of carsService.category'>
-  <mat-expansion-panel class='cars-details__category'>
+  <mat-expansion-panel
+    *ngIf='getCategoryAmount(category) !== 0'
+    class='cars-details__category'
+  >
 
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -14,7 +17,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
 
-    <mat-card *ngFor='let car of carsService.cars | category:category' class='card-container'>
+    <mat-card *ngFor='let car of carsService.cars | categoryFilter:category' class='card-container'>
       <app-car-card [car]='car'></app-car-card>
     </mat-card>
 

@@ -26,23 +26,31 @@ export class CarsService {
   ]
 
   cars: Car[] = [
-    { id: 1, category: this.category[0], name: 'car 1',
-      description: 'description 1', probability: this.PROBABILITY[1], impact: this.IMPACT[0] },
-    { id: 2, category: this.category[1], name: 'car 2',
-      description: 'description 2', probability: this.PROBABILITY[2], impact: this.IMPACT[1] },
-    { id: 3, category: this.category[0], name: 'car 3',
-      description: 'description 3', probability: this.PROBABILITY[3], impact: this.IMPACT[3] },
-    { id: 4, category: this.category[1], name: 'car 4',
-      description: 'description 4', probability: this.PROBABILITY[0], impact: this.IMPACT[2] }
+    { id: 1, category: this.category[0].name, name: 'car 1',
+      description: 'description 1', probability: this.PROBABILITY[1].name, impact: this.IMPACT[0].name },
+    { id: 2, category: this.category[1].name, name: 'car 2',
+      description: 'description 2', probability: this.PROBABILITY[2].name, impact: this.IMPACT[1].name },
+    { id: 3, category: this.category[0].name, name: 'car 3',
+      description: 'description 3', probability: this.PROBABILITY[3].name, impact: this.IMPACT[3].name },
+    { id: 4, category: this.category[1].name, name: 'car 4',
+      description: 'description 4', probability: this.PROBABILITY[0].name, impact: this.IMPACT[2].name }
   ]
 
   getCategoryAmount(category: Category): number {
-    const reducer = (acc, car) => car.category === category ? acc + 1 : acc
+    const reducer = (acc, car) => car.category === category.name ? acc + 1 : acc
     return this.cars.reduce(reducer, 0)
   }
 
-  addCar() {
-    console.log('car was added')
+  addCar(car: Car) {
+    this.cars = [...this.cars, car]
+
+    if (!this.category.find((cat => cat.name.includes(car.category)))) {
+      const newCategory: Category = {
+        id: +Math.random().toFixed(2),
+        name: car.category
+      }
+      this.category = [...this.category, newCategory]
+    }
   }
 
   removeCar(id: number) {

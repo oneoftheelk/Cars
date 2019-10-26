@@ -1,0 +1,71 @@
+<mat-card-header class='card-header'>
+
+  <mat-card-title>Add new car</mat-card-title>
+
+</mat-card-header>
+
+<mat-card-content>
+  <form class="car-add-form" [formGroup]='form'>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Car category"
+        formControlName='category'
+        [matAutocomplete]="auto">
+
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Car name" formControlName='name'>
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea matInput placeholder="Car description" formControlName='description'></textarea>
+    </mat-form-field>
+
+    <div>
+      <mat-form-field>
+        <mat-select
+          placeholder="Car probability"
+          formControlName='probability'
+          [(value)]='selectedProbability'
+        >
+          <mat-option *ngFor='let p of carsService.PROBABILITY' [value]='p.name'>
+            {{p.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select
+          placeholder="Car impact"
+          formControlName='impact'
+          [(value)]='selectedImpact'
+        >
+          <mat-option *ngFor='let i of carsService.IMPACT' [value]='i.name'>
+            {{i.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class='car-add-form__buttons'>
+      <button
+        mat-stroked-button
+        color='secondary'
+        type='submit'
+        (click)='submit()'
+      >Save</button>
+      <button
+        mat-stroked-button
+        color='warn'
+      >Cancel</button>
+    </div>
+  </form>
+</mat-card-content>

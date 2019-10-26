@@ -8,7 +8,8 @@ import {
   MatCardModule,
   MatSelectModule,
   MatInputModule,
-  MatDialogModule
+  MatDialogModule,
+  MatAutocompleteModule
 } from '@angular/material'
 
 @NgModule({
@@ -22,7 +23,8 @@ import {
     MatCardModule,
     MatSelectModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    MatAutocompleteModule
   ]
 })
 export class MaterialModule { }

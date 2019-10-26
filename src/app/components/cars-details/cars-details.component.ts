@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CarsService } from '../../services/cars.service'
+import { MatDialog } from '@angular/material'
+import { CarAddComponent } from '../car-add/car-add.component'
 
 @Component({
   selector: 'app-car-details',
@@ -8,7 +10,10 @@ import { CarsService } from '../../services/cars.service'
 })
 export class CarsDetailsComponent implements OnInit {
 
-  constructor(private carsService: CarsService) { }
+  constructor(
+    private carsService: CarsService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
   }
@@ -17,7 +22,7 @@ export class CarsDetailsComponent implements OnInit {
     return this.carsService.getCategoryAmount(category)
   }
 
-  addCar() {
-    this.carsService.addCar()
+  openDialog() {
+    this.dialog.open(CarAddComponent)
   }
 }

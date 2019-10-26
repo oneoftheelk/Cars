@@ -18,8 +18,8 @@ export class CarCardComponent implements OnInit {
   constructor(private carsService: CarsService) { }
 
   ngOnInit() {
-    this.selectedProbability = this.car.probability.name
-    this.selectedImpact = this.car.impact.name
+    this.selectedProbability = this.car.probability
+    this.selectedImpact = this.car.impact
   }
 
   editCar() {

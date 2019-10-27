@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef } from '@angular/material'
 
 import { CarsService } from '../../services/cars.service'
 import { SnackbarService } from '../../services/snackbar.service'
+import { CdkTextareaAutosize } from '@angular/cdk/text-field'
 
 @Component({
   selector: 'app-car-add',
@@ -11,6 +12,8 @@ import { SnackbarService } from '../../services/snackbar.service'
   styleUrls: ['./car-add.component.scss']
 })
 export class CarAddComponent implements OnInit {
+
+  @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize
 
   form: FormGroup
   selectedProbability = ''

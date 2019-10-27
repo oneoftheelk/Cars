@@ -1,36 +1,6 @@
 <form [formGroup]='form'>
   <mat-card-header class='card-header'>
-
     <mat-card-title>{{car.name}}</mat-card-title>
-
-    <div class='card-header__buttons'>
-      <button
-        *ngIf='readonly; else apply'
-        mat-stroked-button
-        color='secondary'
-        class='card-header__buttons_edit'
-        [disabled]='areButtonsDisabled'
-        (click)='editCar()'
-      >Edit</button>
-
-      <ng-template #apply>
-        <button
-          mat-stroked-button
-          color='primary'
-          class='card-header__buttons_apply'
-          type='submit'
-          [disabled]='areButtonsDisabled || form.status === "INVALID"'
-          (click)='updateCar()'
-        >Apply</button>
-      </ng-template>
-
-      <button
-        mat-stroked-button
-        color='warn'
-        [disabled]='areButtonsDisabled'
-        (click)='removeCar(car.id)'
-      >Remove</button>
-    </div>
   </mat-card-header>
 
   <mat-card-content>
@@ -51,6 +21,8 @@
           matInput
           formControlName='description'
           placeholder='Car description'
+          cdkTextareaAutosize
+          #autosize='cdkTextareaAutosize'
           [(ngModel)]='car.description'
           [readonly]='readonly'
         ></textarea>
@@ -87,6 +59,35 @@
             >{{i.name}}</mat-option>
           </mat-select>
         </mat-form-field>
+
+        <div class='card-content__buttons'>
+          <button
+            *ngIf='readonly; else apply'
+            mat-stroked-button
+            color='secondary'
+            class='card-content__buttons_edit'
+            [disabled]='areButtonsDisabled'
+            (click)='editCar()'
+          >Edit</button>
+
+          <ng-template #apply>
+            <button
+              mat-stroked-button
+              color='primary'
+              class='card-content__buttons_apply'
+              type='submit'
+              [disabled]='areButtonsDisabled || form.status === "INVALID"'
+              (click)='updateCar()'
+            >Apply</button>
+          </ng-template>
+
+          <button
+            mat-stroked-button
+            color='warn'
+            [disabled]='areButtonsDisabled'
+            (click)='removeCar(car.id)'
+          >Remove</button>
+        </div>
       </div>
     </div>
   </mat-card-content>

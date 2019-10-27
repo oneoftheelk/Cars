@@ -3,6 +3,14 @@
   flex-direction: column;
 }
 
+.car-add-form__probability {
+  width: 48%;
+
+  &:first-child {
+    margin-right: 4%;
+  }
+}
+
 .car-add-form__buttons_save {
   margin-right: 5px;
 }

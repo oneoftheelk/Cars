@@ -6,16 +6,6 @@
   position: relative;
 }
 
-.card-header__buttons {
-  position: absolute;
-  right: 10px;
-}
-
-.card-header__buttons_edit,
-.card-header__buttons_apply {
-  margin-right: 5px;
-}
-
 .card-content {
   display: flex;
   flex-direction: column;
@@ -27,4 +17,15 @@
 
 .card-content_readonly {
   pointer-events: none;
+}
+
+.card-content__buttons {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.card-content__buttons_edit,
+.card-content__buttons_apply {
+  margin-right: 5px;
 }

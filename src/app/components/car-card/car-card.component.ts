@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { CarsService } from '../../services/cars.service'
 import { SnackbarService } from '../../services/snackbar.service'
 import { Car } from '../../interfaces/car'
+import { CdkTextareaAutosize } from '@angular/cdk/text-field'
 
 @Component({
   selector: 'app-car-card',
@@ -14,6 +15,7 @@ export class CarCardComponent implements OnInit {
 
   @Input() car: Car
   @ViewChild('name', {static: false}) nameField: ElementRef
+  @ViewChild('autosize', {static: false}) autosize: CdkTextareaAutosize
 
   form: FormGroup
   selectedProbability: string
@@ -23,7 +25,7 @@ export class CarCardComponent implements OnInit {
 
   constructor(
     private carsService: CarsService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit() {

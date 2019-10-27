@@ -14,11 +14,17 @@
     </mat-form-field>
 
     <mat-form-field>
-      <textarea matInput placeholder='Car description' formControlName='description'></textarea>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        #autosize='cdkTextareaAutosize'
+        placeholder='Car description'
+        formControlName='description'
+      ></textarea>
     </mat-form-field>
 
     <div>
-      <mat-form-field>
+      <mat-form-field class='car-add-form__probability'>
         <mat-select placeholder='Car probability' formControlName='probability' [(ngModel)]='selectedProbability'>
           <mat-option *ngFor='let p of carsService.PROBABILITY' [value]='p.name'>
             {{p.name}}
@@ -26,7 +32,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field class='car-add-form__probability'>
         <mat-select placeholder='Car impact' formControlName='impact' [(ngModel)]='selectedImpact'>
           <mat-option *ngFor='let i of carsService.IMPACT' [value]='i.name'>
             {{i.name}}

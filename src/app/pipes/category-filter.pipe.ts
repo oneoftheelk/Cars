@@ -1,5 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { Car, Category } from '../interfaces/car'
+import { Pipe, PipeTransform } from '@angular/core'
+
+import { Car } from '../interfaces/car'
 
 @Pipe({
   name: 'categoryFilter'
@@ -7,7 +8,7 @@ import { Car, Category } from '../interfaces/car'
 export class CategoryFilterPipe implements PipeTransform {
 
   transform(cars: Car[], category: string): Car[] {
-    return cars.filter(car => car.category === category);
+    return cars.filter(car => car.category === category)
   }
 
 }

@@ -11,9 +11,18 @@
   right: 10px;
 }
 
+.card-header__buttons_edit,
+.card-header__buttons_apply {
+  margin-right: 5px;
+}
+
 .card-content {
   display: flex;
   flex-direction: column;
+}
+
+.card-content__probability {
+  margin-right: 20px;
 }
 
 .card-content_readonly {

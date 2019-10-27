@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core'
-import { Car, Category, Impact, Probability } from '../interfaces/car'
 import { HttpClient } from '@angular/common/http'
-import { Observable, Subscription } from 'rxjs'
-import { environment } from '../../environments/environment'
+import { Observable } from 'rxjs'
 import { map, tap } from 'rxjs/operators'
+import { environment } from '../../environments/environment'
+
+import { Car, Category, Impact, Probability } from '../interfaces/car'
 
 @Injectable({
   providedIn: 'root'
@@ -11,20 +12,20 @@ import { map, tap } from 'rxjs/operators'
 export class CarsService {
   constructor(private http: HttpClient) {}
 
-  category: Category[] = [ ]
+  category: Category[] = []
 
   PROBABILITY: Probability[] = [
-    { id: 1, name: 'Low (<=10%)' },
-    { id: 2, name: 'Medium (<=50%)' },
-    { id: 3, name: 'High (<=80%)' },
+    { id: 1, name: 'Low (<10%)' },
+    { id: 2, name: 'Medium (10% - 59%)' },
+    { id: 3, name: 'High (60% - 99%)' },
     { id: 4, name: 'Occurred (100%)' }
   ]
 
   IMPACT: Impact[] = [
     { id: 1, name: 'Small (<1%)' },
-    { id: 2, name: 'Medium (<3%)' },
-    { id: 3, name: 'High (<5%)' },
-    { id: 4, name: 'Rather high (>=5%)' },
+    { id: 2, name: 'Medium (1% - 3%)' },
+    { id: 3, name: 'High (3% - 5%)' },
+    { id: 4, name: 'Rather high (>5%)' },
   ]
 
   cars: Car[] = []
@@ -37,6 +38,7 @@ export class CarsService {
   getCars(): Observable<Car[]> {
     return this.http.get(`${environment.databaseUrl}/cars.json`)
       .pipe(
+        // приводит ответ к нужному виду (индекс: значение)
         map((response: {[key: string]: any}) => {
           return Object
             .keys(response)
@@ -47,8 +49,8 @@ export class CarsService {
         }),
         tap(response => {
           this.cars = response
-        }),
-        tap(response => {
+
+          // обновляет категории уникальными значениями
           const newCategories = []
           for (const res of response) {
             if (!newCategories.includes(res.category)) {

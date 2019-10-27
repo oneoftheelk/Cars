@@ -1,8 +1,9 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core'
-import { CarsService } from '../../services/cars.service'
-import { Car } from '../../interfaces/car'
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
+
+import { CarsService } from '../../services/cars.service'
 import { SnackbarService } from '../../services/snackbar.service'
+import { Car } from '../../interfaces/car'
 
 @Component({
   selector: 'app-car-card',
@@ -12,6 +13,7 @@ import { SnackbarService } from '../../services/snackbar.service'
 export class CarCardComponent implements OnInit {
 
   @Input() car: Car
+  @ViewChild('name', {static: false}) nameField: ElementRef
 
   form: FormGroup
   selectedProbability: string
@@ -22,7 +24,7 @@ export class CarCardComponent implements OnInit {
   constructor(
     private carsService: CarsService,
     private snackbarService: SnackbarService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.selectedProbability = this.car.probability
@@ -38,17 +40,20 @@ export class CarCardComponent implements OnInit {
 
   editCar() {
     this.readonly = false
+    this.nameField.nativeElement.focus()
   }
 
   removeCar(id: string) {
     this.areButtonsDisabled = true
 
     this.carsService.removeCar(id)
-      .subscribe(() => this.carsService.getCars()
-        .subscribe(() => {
-          this.areButtonsDisabled = false
-          this.snackbarService.openSnackBar('Car has been removed')
-        })
+      .subscribe(() => {
+        this.carsService.getCars()
+          .subscribe(() => {
+            this.areButtonsDisabled = false
+            this.snackbarService.openSnackBar('Car has been removed')
+          })
+        }
       )
   }
 

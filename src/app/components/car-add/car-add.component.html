@@ -1,27 +1,25 @@
 <mat-card-header class='card-header'>
-
   <mat-card-title>Add new car</mat-card-title>
-
 </mat-card-header>
 
 <mat-card-content>
-  <form class="car-add-form" [formGroup]='form'>
+  <form class='car-add-form' [formGroup]='form'>
 
     <mat-form-field>
-      <input matInput placeholder="Car category" formControlName='category'>
+      <input matInput placeholder='Car category' formControlName='category'>
     </mat-form-field>
 
     <mat-form-field>
-      <input matInput placeholder="Car name" formControlName='name'>
+      <input matInput placeholder='Car name' formControlName='name'>
     </mat-form-field>
 
     <mat-form-field>
-      <textarea matInput placeholder="Car description" formControlName='description'></textarea>
+      <textarea matInput placeholder='Car description' formControlName='description'></textarea>
     </mat-form-field>
 
     <div>
       <mat-form-field>
-        <mat-select placeholder="Car probability" formControlName='probability' [(ngModel)]='selectedProbability'>
+        <mat-select placeholder='Car probability' formControlName='probability' [(ngModel)]='selectedProbability'>
           <mat-option *ngFor='let p of carsService.PROBABILITY' [value]='p.name'>
             {{p.name}}
           </mat-option>
@@ -29,7 +27,7 @@
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select placeholder="Car impact" formControlName='impact' [(ngModel)]='selectedImpact'>
+        <mat-select placeholder='Car impact' formControlName='impact' [(ngModel)]='selectedImpact'>
           <mat-option *ngFor='let i of carsService.IMPACT' [value]='i.name'>
             {{i.name}}
           </mat-option>
@@ -42,6 +40,7 @@
         mat-stroked-button
         color='secondary'
         type='submit'
+        class='car-add-form__buttons_save'
         [disabled]='areButtonsDisabled || form.status === "INVALID"'
         (click)='submit()'
       >Save</button>
